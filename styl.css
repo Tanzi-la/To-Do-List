@@ -1,0 +1,338 @@
+/* ==========================================
+   1. ОБЩИЕ СТИЛИ И ПАЛИТРА (Variables)
+   ========================================== */
+:root {
+  --bg-color: #f7f5f0;          /* Кремдей светлый фон */
+  --card-bg: #ffffff;           /* Тапшырмалардын ак фону */
+  --text-main: #1e293b;         /* Төмөнкү тёмно-синий/графит түс */
+  --text-muted: #64748b;        /* Боз тексттер үчүн */
+  --accent-color: #0f172a;      /* Негизги акцент түс */
+  
+  /* Статустардын түстөрү */
+  --status-done: #10b981;       /* Выполнено - жашыл */
+  --status-process: #f59e0b;    /* В процессе - сары/оранжевый */
+  --status-upcoming: #3b82f6;   /* Предстоящее - көк */
+  --status-urgent: #ef4444;     /* Срочно - кызыл */
+  
+  --border-radius: 16px;
+  --shadow: 0 4px 20px rgba(0, 0, 0, 0.04);
+  --shadow-hover: 0 8px 30px rgba(0, 0, 0, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-main);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  min-height: 100vh;
+  padding: 40px 20px;
+}
+
+/* ==========================================
+   2. HEADER
+   ========================================== */
+header {
+  width: 100%;
+  max-width: 720px;
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  gap: 20px;
+  align-items: center;
+  margin-bottom: 30px;
+}
+
+.page-title {
+  font-size: 28px;
+  font-weight: 800;
+  letter-spacing: -0.5px;
+  grid-column: 1 / -1;
+}
+
+.date-info {
+  display: flex;
+  gap: 8px;
+  font-weight: 600;
+  color: var(--text-muted);
+}
+
+.day-progress {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  background: var(--card-bg);
+  padding: 8px 16px;
+  border-radius: 30px;
+  box-shadow: var(--shadow);
+  font-size: 14px;
+}
+
+.progress-percent {
+  font-weight: 700;
+  color: var(--status-done);
+}
+
+.streak {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff7ed;
+  padding: 8px 16px;
+  border-radius: 30px;
+  font-size: 14px;
+  font-weight: 600;
+  color: #c2410c;
+}
+
+.profile {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.profile::before {
+  content: '';
+  width: 36px;
+  height: 36px;
+  background-color: var(--accent-color);
+  border-radius: 50%;
+  display: inline-block;
+}
+
+/* ==========================================
+   3. MAIN & STATISTICS
+   ========================================== */
+main {
+  width: 100%;
+  max-width: 720px;
+}
+
+.statistics {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 12px;
+  margin-bottom: 30px;
+}
+
+.stat-item {
+  background: var(--card-bg);
+  padding: 16px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  transition: transform 0.2s;
+}
+
+.stat-item:hover {
+  transform: translateY(-2px);
+}
+
+.stat-item span:first-child {
+  font-size: 22px;
+  font-weight: 800;
+}
+
+.stat-item span:last-child {
+  font-size: 12px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ==========================================
+   4. TASK FILTER
+   ========================================== */
+.task-filter {
+  display: flex;
+  gap: 8px;
+  background: rgba(0, 0, 0, 0.03);
+  padding: 6px;
+  border-radius: 30px;
+  margin-bottom: 40px;
+}
+
+.filter-btn {
+  flex: 1;
+  border: none;
+  background: transparent;
+  padding: 10px 16px;
+  border-radius: 20px;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: all 0.2s ease;
+}
+
+.filter-btn:hover {
+  color: var(--text-main);
+}
+
+.filter-btn:first-child {
+  background: var(--card-bg);
+  color: var(--text-main);
+  box-shadow: var(--shadow);
+}
+
+/* ==========================================
+   5. TIMELINE & TASKS (Вертикалдык сызык)
+   ========================================== */
+.task {
+  position: relative;
+  display: grid;
+  grid-template-columns: 70px 1fr;
+  grid-template-rows: auto auto auto;
+  gap: 6px 16px;
+  background: var(--card-bg);
+  padding: 20px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  margin-bottom: 24px;
+  margin-left: 40px; /* Сызык үчүн орун */
+  transition: all 0.2s ease;
+}
+
+.task:hover {
+  box-shadow: var(--shadow-hover);
+  transform: translateX(4px);
+}
+
+/* Вертикалдык timeline сызыгы */
+.task::before {
+  content: '';
+  position: absolute;
+  left: -25px;
+  top: -24px;
+  width: 2px;
+  height: calc(100% + 24px);
+  background-color: #cbd5e1;
+}
+
+/* Сызыктагы тегерек чекиттер */
+.task::after {
+  content: '';
+  position: absolute;
+  left: -29px;
+  top: 24px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: var(--accent-color);
+  box-shadow: 0 0 0 4px var(--bg-color);
+}
+
+/* Чекбокс жашырылып, таза UI жасалат */
+.task-checkbox {
+  display: none;
+}
+
+.task-time {
+  font-weight: 700;
+  font-size: 14px;
+  color: var(--text-muted);
+  grid-column: 1;
+  grid-row: 1;
+}
+
+/* Статустар үчүн стилдер (Badges) */
+.done, .progress, .upcoming, .urgent, .planned {
+  grid-column: 2;
+  grid-row: 1;
+  justify-self: start;
+  font-size: 12px;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: 12px;
+}
+
+.done { background: #d1fae5; color: #065f46; }
+.progress { background: #fef3c7; color: #92400e; }
+.upcoming { background: #dbeafe; color: #1e40af; }
+.urgent { background: #fee2e2; color: #991b1b; }
+.planned { background: #f1f5f9; color: #475569; }
+
+.task-title {
+  grid-column: 1 / -1;
+  font-size: 16px;
+  font-weight: 700;
+  margin-top: 4px;
+}
+
+.task-category {
+  grid-column: 1 / -1;
+  font-size: 13px;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* ==========================================
+   6. QUICK ADD
+   ========================================== */
+.quick-add {
+  background: var(--card-bg);
+  padding: 24px;
+  border-radius: var(--border-radius);
+  box-shadow: var(--shadow);
+  margin-top: 40px;
+  margin-bottom: 40px;
+}
+
+.quick-add-title {
+  font-size: 16px;
+  font-weight: 700;
+  margin-bottom: 14px;
+}
+
+.quick-add input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1px solid #e2e8f0;
+  border-radius: 12px;
+  font-size: 14px;
+  outline: none;
+  margin-bottom: 12px;
+  transition: border-color 0.2s;
+}
+
+.quick-add input:focus {
+  border-color: var(--accent-color);
+}
+
+.add-task-btn {
+  width: 100%;
+  background: var(--accent-color);
+  color: white;
+  border: none;
+  padding: 14px;
+  border-radius: 12px;
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.add-task-btn:hover {
+  opacity: 0.9;
+}
+
+/* ==========================================
+   7. FOOTER
+   ========================================== */
+.footer {
+  text-align: center;
+  padding: 20px 0;
+  color: var(--text-muted);
+  font-size: 13px;
+  font-style: italic;
+}
